@@ -1,0 +1,37 @@
+pipeline {
+    agent any
+    
+    stages {
+        stage('Getting tar file from Nexus') {
+            steps {
+                script {
+                    sh "ssh ubuntu@${remote_vm_ip_address} 'curl -u jashu:12345 -O -L http://${ip_address}:8081/repository/python-repo/pythontar.${img_tag}.tar'"
+                }
+            }
+        }
+
+        stage('Unarchive the tar file') {
+            steps {
+                script {
+                    sh "ssh ubuntu@${remote_vm_ip_address} 'tar -xvf pythontar.${img_tag}.tar && cd demo-backend2/sa'"
+                }
+            }
+        }
+
+        stage('Install Dependencies') {
+            steps {
+                script {
+                    sh "ssh ubuntu@${remote_vm_ip_address} 'pip3 install -r demo-backend2/sa/requirements.txt'"
+                }
+            }
+        }
+
+        stage('Run Sentiment Analysis') {
+            steps {
+                script {
+                    sh "ssh ubuntu@${remote_vm_ip_address} 'python3 demo-backend2/sa/sentiment_analysis.py'"
+                }
+            }
+        }
+    }
+}
