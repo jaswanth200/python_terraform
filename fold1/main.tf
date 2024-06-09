@@ -17,8 +17,7 @@ provider "aws" {
 resource "aws_vpc" "provpc" {
   cidr_block = "10.10.0.0/16"
 
-  tags = {
-     
+  tags = {   
     Name = "provpc"
   }
 }
@@ -69,7 +68,6 @@ resource "aws_subnet" "aval_1b_subnet" {
   cidr_block = "10.10.2.0/24"
   availability_zone = "us-east-1b"
 
-
   tags = {
     Name = "aval_1b_subnet"
   }  
@@ -103,7 +101,6 @@ resource "aws_subnet" "aval_1c_subnet" {
   cidr_block = "10.10.3.0/24"
   availability_zone = "us-east-1c"
 
-
   tags = {
     Name = "aval_1c_subnet"
   }  
@@ -133,36 +130,35 @@ resource "aws_route_table_association" "public_attach_1c" {
 
 #creating security_group for instance
 resource "aws_security_group" "prosg" {
-  name   = "prosg"
-  vpc_id = aws_vpc.provpc.id
+  name        = "prosg"
+  vpc_id      = aws_vpc.provpc.id
   description = "security_group"
 
   ingress {
     description = "http from all internet"
-    from_port = 80
-    to_port = 80
-    protocol = "TCP"
+    from_port   = 80
+    to_port     = 80
+    protocol    = "TCP"
     cidr_blocks = ["0.0.0.0/0"]
   }
 
   ingress {
     description = "http from all internet"
-    from_port = 22
-    to_port = 22
-    protocol = "TCP"
+    from_port   = 22
+    to_port     = 22
+    protocol    = "TCP"
     cidr_blocks = ["0.0.0.0/0"]
   }
 
   egress {
-    description = "http to all internet"
-    from_port = 0
-    to_port = 0
-    protocol = "-1"
-    cidr_blocks = ["0.0.0.0/0"]
+    description      = "http to all internet"
+    from_port        = 0
+    to_port          = 0
+    protocol         = "-1"
+    cidr_blocks      = ["0.0.0.0/0"]
     ipv6_cidr_blocks = ["::/0"] 
   }
 }
-
 
 resource "aws_instance" "python_First_Instance" {
   ami           = "ami-0f58b397bc5c1f2e8"
@@ -182,7 +178,7 @@ resource "aws_instance" "python_First_Instance" {
     associate_public_ip_address = true
 }
 
-resource "aws_ami_from_Instance" "python_First_Instance_ami" {
+resource "aws_ami_from_instance" "python_First_Instance_ami" {
   name               = "python_First_Instance-ami"
   source_instance_id = aws_instance.python_First_Instance.id
   depends_on         = [aws_instance.python_First_Instance]
