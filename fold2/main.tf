@@ -16,7 +16,7 @@ provider "aws" {
 data "terraform_remote_state" "networking" {
   backend = "local"
   config = {
-    path = "../fold1/terraform.tfstate"  # Path to the first configuration's state file
+    path = "/var/lib/jenkins/workspace/python_terraform_first_vm/fold1/terraform.tfstate"  # Path to the first configuration's state file
   }
 }
 
@@ -108,7 +108,7 @@ variable "asgdesired" {
 # Creating launch configuration for autoscaling
 resource "aws_launch_configuration" "pro_aws_asg_config" {
   name                      = "pro_aws_asg_config"
-  image_id                  = data.terraform_remote_state.networking.outputs.first_instance_ami
+  image_id                  = data.terraform_remote_state.networking.outputs.python_First_Instance_ami
   instance_type             = "t2.micro"
   key_name                  = "terraformkey"
   security_groups           = [data.terraform_remote_state.networking.outputs.prosg]
