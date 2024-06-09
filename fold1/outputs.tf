@@ -19,7 +19,7 @@ output "aval_1c_subnet" {
 }
 
 output "python_First_Instance_ami" {
-  value = aws_ami_python_First_Instance.python_First_Instance_ami.id
+  value = aws_ami_from_Instance.python_First_Instance_ami.id
 }
 
 output "python_First_Instance_ip" {
