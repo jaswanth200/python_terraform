@@ -164,13 +164,13 @@ resource "aws_security_group" "prosg" {
 }
 
 
-resource "aws_instance" "first_instance" {
+resource "aws_instance" "python_First_Instance" {
   ami           = "ami-04b70fa74e45c3917"
   instance_type = "t2.micro"
   subnet_id     = aws_subnet.aval_1a_subnet.id
   security_groups = [aws_security_group.prosg.id]
   tags = {
-    Name = "FirstInstance"
+    Name = "python_FirstInstance"
   }
   user_data = <<-EOF
               #!/bin/bash
@@ -182,11 +182,11 @@ resource "aws_instance" "first_instance" {
     associate_public_ip_address = true
 }
 
-resource "aws_ami_from_instance" "first_instance_ami" {
-  name               = "first-instance-ami"
-  source_instance_id = aws_instance.first_instance.id
-  depends_on         = [aws_instance.first_instance]
+resource "aws_ami_python_First_Instance" "python_First_Instance_ami" {
+  name               = "python_First_Instance-ami"
+  source_instance_id = aws_instance.python_First_Instance.id
+  depends_on         = [aws_instance.python_First_Instance]
   tags = {
-    Name = "FirstInstanceAMI"
+    Name = "python_FirstInstanceAMI"
   }
 }
