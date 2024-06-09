@@ -170,7 +170,7 @@ resource "aws_instance" "python_First_Instance" {
   subnet_id     = aws_subnet.aval_1a_subnet.id
   security_groups = [aws_security_group.prosg.id]
   tags = {
-    Name = "python_FirstInstance"
+    Name = "pythonFirstInstance"
   }
   user_data = <<-EOF
               #!/bin/bash
@@ -182,7 +182,7 @@ resource "aws_instance" "python_First_Instance" {
     associate_public_ip_address = true
 }
 
-resource "aws_ami_python_First_Instance" "python_First_Instance_ami" {
+resource "aws_ami_from_Instance" "python_First_Instance_ami" {
   name               = "python_First_Instance-ami"
   source_instance_id = aws_instance.python_First_Instance.id
   depends_on         = [aws_instance.python_First_Instance]
