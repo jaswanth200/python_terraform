@@ -44,7 +44,7 @@ pipeline {
             steps {
                 script {
                     // Activate the virtual environment and run the script
-                    sh "ssh ubuntu@${remote_vm_ip_address} 'source demo-backend2/sa/venv/bin/activate && python demo-backend2/sa/sentiment_analysis.py'"
+                    sh "ssh ubuntu@${remote_vm_ip_address} 'source demo-backend2/sa/venv/bin/activate && python demo-backend2/sa/sentiment_analysis.py &'"
                 }
             }
         }
