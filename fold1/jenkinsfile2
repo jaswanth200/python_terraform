@@ -21,7 +21,12 @@ pipeline {
         stage('Install Dependencies') {
             steps {
                 script {
-                    sh "ssh ubuntu@${remote_vm_ip_address} 'pip3 install -r demo-backend2/sa/requirements.txt'"
+                    // Create a virtual environment
+                    sh "ssh ubuntu@${remote_vm_ip_address} 'python3 -m venv demo-backend2/sa/venv'"
+                    // Activate the virtual environment
+                    sh "ssh ubuntu@${remote_vm_ip_address} 'source demo-backend2/sa/venv/bin/activate'"
+                    // Install the required packages within the virtual environment
+                    sh "ssh ubuntu@${remote_vm_ip_address} 'pip install -r demo-backend2/sa/requirements.txt'"
                 }
             }
         }
@@ -29,7 +34,8 @@ pipeline {
         stage('Run Sentiment Analysis') {
             steps {
                 script {
-                    sh "ssh ubuntu@${remote_vm_ip_address} 'python3 demo-backend2/sa/sentiment_analysis.py'"
+                    // Activate the virtual environment and run the script
+                    sh "ssh ubuntu@${remote_vm_ip_address} 'source demo-backend2/sa/venv/bin/activate && python3 demo-backend2/sa/sentiment_analysis.py'"
                 }
             }
         }
