@@ -165,7 +165,7 @@ resource "aws_security_group" "prosg" {
 
 
 resource "aws_instance" "python_First_Instance" {
-  ami           = "ami-04b70fa74e45c3917"
+  ami           = "ami-0f58b397bc5c1f2e8"
   instance_type = "t2.micro"
   subnet_id     = aws_subnet.aval_1a_subnet.id
   security_groups = [aws_security_group.prosg.id]
