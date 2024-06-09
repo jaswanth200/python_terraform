@@ -18,6 +18,14 @@ pipeline {
             }
         }
 
+        stage('Install Python3 venv package') {
+            steps {
+                script {
+                    sh "ssh ubuntu@${remote_vm_ip_address} 'sudo apt install -y python3-venv'"
+                }
+            }
+        }
+
         stage('Install Dependencies') {
             steps {
                 script {
