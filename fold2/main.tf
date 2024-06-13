@@ -13,12 +13,7 @@ provider "aws" {
   region = "us-east-1"
 }
 
-data "terraform_remote_state" "networking" {
-  backend = "local"
-  config = {
-    path = "/var/lib/jenkins/workspace/python_terraform_first_vm/fold1/terraform.tfstate"  # Path to the first configuration's state file
-  }
-}
+
 
 #################################### LOAD BALANCER SECURITY GROUP ############################################
 
