@@ -20,7 +20,7 @@ pipeline {
                         sh """
                             terraform apply -auto-approve \
                                 -var="ami=${AMI_ID}" \
-                                | tee /tmp/terraform_output_fold2.txt
+                                | tee /tmp/terraform_output.txt
                         """
                         
                     }
