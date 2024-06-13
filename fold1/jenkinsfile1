@@ -6,6 +6,7 @@ pipeline {
             steps {
                 dir('fold1') {
                     script {
+                        // Initialize Terraform
                         sh 'terraform init'
                     }
                 }
@@ -16,7 +17,12 @@ pipeline {
             steps {
                 dir('fold1') {
                     script {
-                        sh 'terraform apply -auto-approve'
+                        // Apply the Terraform configuration
+                        sh 'terraform apply -auto-approve | tee /tmp/terraform_output.txt'
+                        
+                        // Extract AMI ID using sed (example)
+                        def AMI_ID = sh(script: 'sed -n \'s/^.*python_First_Instance_ami = //p\' /tmp/terraform_output.txt', returnStdout: true).trim()
+                        echo "Captured AMI ID: ${AMI_ID}"
                     }
                 }
             }
