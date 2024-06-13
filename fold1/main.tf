@@ -10,7 +10,7 @@ terraform {
 }
 
 provider "aws" {
-  region = "us-east-1"
+  region = "ap-south-1"
 }
 
 #creating vpc
@@ -35,7 +35,7 @@ resource "aws_internet_gateway" "proig" {
 resource "aws_subnet" "aval_1a_subnet" {
   vpc_id     = aws_vpc.provpc.id
   cidr_block = "10.10.1.0/24"
-  availability_zone = "us-east-1a"
+  availability_zone = "ap-south-1a"
 
   tags = {
     Name = "aval_1a_subnet"
@@ -66,7 +66,7 @@ resource "aws_route_table_association" "public_attach_1a" {
 resource "aws_subnet" "aval_1b_subnet" {
   vpc_id     = aws_vpc.provpc.id
   cidr_block = "10.10.2.0/24"
-  availability_zone = "us-east-1b"
+  availability_zone = "ap-south-1b"
 
   tags = {
     Name = "aval_1b_subnet"
@@ -99,7 +99,7 @@ resource "aws_route_table_association" "public_attach_1b" {
 resource "aws_subnet" "aval_1c_subnet" {
   vpc_id     = aws_vpc.provpc.id
   cidr_block = "10.10.3.0/24"
-  availability_zone = "us-east-1c"
+  availability_zone = "ap-south-1c"
 
   tags = {
     Name = "aval_1c_subnet"
@@ -161,7 +161,7 @@ resource "aws_security_group" "prosg" {
 }
 
 resource "aws_instance" "python_First_Instance" {
-  ami           = "ami-04b70fa74e45c3917"
+  ami           = "ami-0e1d06225679bc1c5"
   instance_type = "t2.micro"
   subnet_id     = aws_subnet.aval_1a_subnet.id
   security_groups = [aws_security_group.prosg.id]
@@ -174,7 +174,7 @@ resource "aws_instance" "python_First_Instance" {
               sudo apt-get install -y python3
               sudo apt-get install -y python3-pip
               EOF
-    key_name = "jenkinskey"
+    key_name = "hhkey"
     associate_public_ip_address = true
 }
 
