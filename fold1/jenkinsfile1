@@ -1,60 +1,31 @@
 pipeline {
     agent any
    
-    environment {
-        REMOTE_VM_IP = 'your_remote_vm_ip_here'
-        IMG_TAG = 'your_image_tag_here'
-    }
-   
     stages {
-        stage('Terraform Init - Folder 1') {
+        stage('Terraform Init') {
             steps {
                 dir('fold1') {
                     script {
-                        // Initialize Terraform for folder 1
+                        // Initialize Terraform
                         sh 'terraform init'
                     }
                 }
             }
         }
 
-        stage('Terraform Apply - Folder 1') {
+        stage('Terraform Apply') {
             steps {
                 dir('fold1') {
                     script {
-                        // Apply the Terraform configuration for folder 1
+                        // Apply the Terraform configuration
                         sh 'terraform apply -auto-approve | tee /tmp/terraform_output.txt'
                         
                         // Extract AMI ID using sed (example)
                         def AMI_ID = sh(script: 'sed -n \'s/^.*python_First_Instance_ami = //p\' /tmp/terraform_output.txt', returnStdout: true).trim()
-                        echo "Captured AMI ID (Folder 1): ${AMI_ID}"
-                        
-                        // Store AMI_ID in environment variable for later use
-                        env.AMI_ID = AMI_ID
+                        echo "Captured AMI ID: ${AMI_ID}"
                     }
                 }
             }
         }
-
-        stage('Deploy Python Application') {
-            steps {
-                script {
-                    // Fetch tar file from Nexus repository to remote VM
-                    sh "ssh ubuntu@${env.REMOTE_VM_IP} 'curl -u jashu:12345 -O -L http://${env.REMOTE_VM_IP}:8081/repository/python-repo/pythontar.${env.IMG_TAG}.tar'"
-                    
-                    // Unarchive the tar file on the remote VM
-                    sh "ssh ubuntu@${env.REMOTE_VM_IP} 'tar -xvf pythontar.${env.IMG_TAG}.tar && cd demo-backend2/sa'"
-                    
-                    // Create and activate virtual environment on the remote VM
-                    sh "ssh ubuntu@${env.REMOTE_VM_IP} 'python3 -m venv demo-backend2/sa/venv && source demo-backend2/sa/venv/bin/activate'"
-                    
-                    // Install dependencies within the virtual environment
-                    sh "ssh ubuntu@${env.REMOTE_VM_IP} 'source demo-backend2/sa/venv/bin/activate && python -m ensurepip && pip install -r demo-backend2/sa/requirements.txt'"
-                    
-                    // Run sentiment analysis script within the virtual environment
-                    sh "ssh ubuntu@${env.REMOTE_VM_IP} 'source demo-backend2/sa/venv/bin/activate && python demo-backend2/sa/sentiment_analysis.py &'"
-                }
-            }
-        }
     }
-}
+} 
