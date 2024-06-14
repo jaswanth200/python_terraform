@@ -17,11 +17,7 @@ pipeline {
                 dir('fold2') {
                     script {
                         
-                        sh """
-                            terraform apply -auto-approve \
-                                -var="ami=${AMI_ID}" \
-                                | tee /tmp/terraform_output.txt
-                        """
+                        sh 'terraform apply -auto-approve -var-file=/tmp/ami.tfvars'
                         
                     }
                 }
