@@ -6,7 +6,7 @@ pipeline {
             steps {
                 dir('fold2') {
                     script {
-                        sh 'terraform init'
+                        sh 'terraform init -upgrade'
                     }
                 }
             }
