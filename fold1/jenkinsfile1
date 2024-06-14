@@ -21,7 +21,7 @@ pipeline {
                 dir('fold1') {
                     script {
                         // Apply the Terraform configuration
-                        sh 'terraform apply -auto-approve | grep "ami_id" > /tmp/ami.tfvars'
+                        sh 'terraform apply -auto-approve | grep "python_First_Instance_ami" > /tmp/ami.tfvars'
                     }
                 }
             }
