@@ -10,7 +10,7 @@ pipeline {
                 dir('fold1') {
                     script {
                         // Initialize Terraform
-                        sh 'terraform init'
+                        sh 'terraform init -upgrade'
                     }
                 }
             }
