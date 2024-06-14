@@ -179,7 +179,7 @@ resource "aws_instance" "python_First_Instance" {
 }
 
 resource "aws_ami_from_instance" "python_First_Instance_ami" {
-  name               = "python_First_Instance-ami-${formatdate("YYYYMMDD-HHmmss", timestamp())}"
+  name               = "python_First_Instance-ami"
   source_instance_id = aws_instance.python_First_Instance.id
   depends_on         = [aws_instance.python_First_Instance]
   tags = {
