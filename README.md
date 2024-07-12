@@ -14,7 +14,7 @@ This project provisions an AWS infrastructure using Terraform and deploys a Pyth
 Project Structure
 =================
 ```
-├── file1/
+├── fold1/
 │   ├── main.tf
 │   ├── outputs.tf
 │   └── variables.tf
@@ -22,8 +22,8 @@ Project Structure
 └── Jenkinsfile2
 ```
 
-* file1/main.tf: Contains the Terraform configuration for AWS resources.
-* file1/outputs.tf: Defines the outputs of the Terraform configuration.
+* fold1/main.tf: Contains the Terraform configuration for AWS resources.
+* fold1/outputs.tf: Defines the outputs of the Terraform configuration.
 * Jenkinsfile1: Jenkins pipeline for initializing and applying Terraform configuration.
 * Jenkinsfile2: Jenkins pipeline for deploying the Python application.
 
@@ -40,7 +40,7 @@ Setup Instructions
 
 # <h3>1. Navigate to the Terraform directory:</h3>
 ```
-cd file1
+cd fold1
 ```
 # <h3>2. Initialize Terraform:</h3>
 ```
@@ -55,7 +55,7 @@ terraform apply -auto-approve
 # <h2>Jenkins Setup</h2>
 **1.** Create a Jenkins job for each pipeline using Jenkinsfile1 and Jenkinsfile2.<br>
 **2.** Configure the job:
-* For Jenkinsfile1, ensure it points to the correct Terraform directory (file1).
+* For Jenkinsfile1, ensure it points to the correct Terraform directory (fold1).
 * For Jenkinsfile2, replace placeholders (${remote_vm_ip_address}, ${nexus_ip_address}, ${img_tag}) with actual values.
 **3.** Run the Jenkins jobs sequentially:
 * Start with the job using Jenkinsfile1 to provision AWS resources.
@@ -90,7 +90,7 @@ This pipeline performs the following stages:<br>
 This pipeline performs the following stages:<br>
 **1.** <b>Getting tar file from Nexus:</b> Downloads a tar file from the Nexus repository.<br>
 **2.** <b>Unarchive the tar file:</b> Unarchives the tar file on the remote VM.<br>
-**3.** <b>Run the Python APPLICATION:</b> Runs the Python application using the specified JAR file.
+**3.** <b>Run the Python APPLICATION:</b> Runs the Python application using the specified sa/ file.
 
 Outputs
 =======
@@ -122,14 +122,14 @@ This project extends the AWS infrastructure setup by adding an Application Load 
 
 ## Project Structure
 ```
-├── file2/
+├── fold2/
 │ ├── main.tf
 │ ├── variables.tf
 ├── Jenkinsfile
 ```
 
-* **file2/main.tf**: Contains the Terraform configuration for load balancer, auto-scaling, and security groups.
-* **file2/variables.tf**: Defines variables used in the Terraform configuration.
+* **fold2/main.tf**: Contains the Terraform configuration for load balancer, auto-scaling, and security groups.
+* **fold2/variables.tf**: Defines variables used in the Terraform configuration.
 * **Jenkinsfile**: Jenkins pipeline for initializing and applying the Terraform configuration.
 
 ## Prerequisites
@@ -143,12 +143,12 @@ This project extends the AWS infrastructure setup by adding an Application Load 
 
 ### AWS Setup with Terraform
 
-1. **Ensure you have the Terraform state file from the previous configuration (`file1`):**
+1. **Ensure you have the Terraform state file from the previous configuration (`fold1`):**
    - It should be located at `/var/lib/jenkins/workspace/Java_Terraform_VM_Create/file1/terraform.tfstate`.
 
 2. **Navigate to the Terraform directory:**
    ```sh
-   cd file2
+   cd fold2
 * Initialize Terraform:
 ```
 terraform init -upgrade
@@ -158,9 +158,9 @@ terraform init -upgrade
 terraform apply -auto-approve
 ```
 # Jenkins Setup
-**1.** Create a Jenkins job using the Jenkinsfile located in file2/.<br>
+**1.** Create a Jenkins job using the Jenkinsfile located in fold2/.<br>
 **2.** Configure the job:<br>
-**3.** Ensure it points to the correct Terraform directory (file2).<br>
+**3.** Ensure it points to the correct Terraform directory (fold2).<br>
 **4.** Run the Jenkins job to provision the load balancer and auto-scaling group on AWS.
 
 Terraform Commands
